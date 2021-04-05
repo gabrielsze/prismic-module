@@ -71,7 +71,8 @@ export default async (context, inject) => {
         const { token, documentId } = query
 
         if (token) {
-          const previewResolver = await this.api.getPreviewResolver(token, documentId)
+          let api = await Prismic.api('<%= options.endpoint %>', Object.assign({}, options,  <%= JSON.stringify(options.apiOptions) %>))
+          const previewResolver = await api.getPreviewResolver(token, documentId)
           const maybeUrl = await previewResolver.resolve(this.linkResolver, '/')
           if (maybeUrl) {
             url = maybeUrl
